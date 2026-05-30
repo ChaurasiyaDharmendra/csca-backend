@@ -4,8 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 
-//import connectDB, { sequelize } from "./config/db.js";
-//import "./models/index.js";
+import connectDB, { sequelize } from "./config/db.js";
+import "./models/index.js";
 import authRoutes from "./routes/authRoutes.js";
 import authLoginRoutes from "./routes/authLoginRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
@@ -79,12 +79,7 @@ app.use("/api/certifications", certificationRoutes);
 app.use("/api/careers", careerRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/resources", resourceRoutes);
-app.use("/api/partnerships", partnershipRoutes); 
-
-// Test Route
-app.get("/", (req, res) => {
-    res.send("CSCA Platform Backend Running Successfully");
-});
+app.use("/api/partnerships", partnershipRoutes);
 
 // Socket.io Logic
 io.on("connection", (socket) => {
@@ -196,11 +191,19 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
 
-// TEMPORARY START WITHOUT DATABASE
-autoCleanupSessions();
-setInterval(autoCleanupSessions, 60 * 60 * 1000);
+connectDB().then(async () => {
+    try {
+        // Warning: alter: true in Sequelize can cause MySQL to reach index limits (64)
+        // Switch to false by default for stability.
+        await sequelize.sync({ alter: false });
+        console.log("Database synced successfully");
 
-server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT} with Sockets`);
+        // Initial Cleanup & Set 1-hour interval for auto-cleanup (24 hours check)
+        autoCleanupSessions();
+        setInterval(autoCleanupSessions, 60 * 60 * 1000);
+
+        server.listen(PORT, () => console.log(`Server running on port ${PORT} with Sockets`));
+    } catch (err) {
+        console.error("Failed to sync database:", err);
+    }
 });
-
