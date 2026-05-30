@@ -4,8 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 
-import connectDB, { sequelize } from "./config/db.js";
-import "./models/index.js";
+//import connectDB, { sequelize } from "./config/db.js";
+//import "./models/index.js";
 import authRoutes from "./routes/authRoutes.js";
 import authLoginRoutes from "./routes/authLoginRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
@@ -191,19 +191,11 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
 
-connectDB().then(async () => {
-    try {
-        // Warning: alter: true in Sequelize can cause MySQL to reach index limits (64)
-        // Switch to false by default for stability.
-        await sequelize.sync({ alter: false });
-        console.log("Database synced successfully");
+// TEMPORARY START WITHOUT DATABASE
+autoCleanupSessions();
+setInterval(autoCleanupSessions, 60 * 60 * 1000);
 
-        // Initial Cleanup & Set 1-hour interval for auto-cleanup (24 hours check)
-        autoCleanupSessions();
-        setInterval(autoCleanupSessions, 60 * 60 * 1000);
-
-        server.listen(PORT, () => console.log(`Server running on port ${PORT} with Sockets`));
-    } catch (err) {
-        console.error("Failed to sync database:", err);
-    }
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} with Sockets`);
 });
+
