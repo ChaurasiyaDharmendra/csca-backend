@@ -21,11 +21,16 @@ const Result = sequelize.define('Result', {
     examTitle: {
         type: DataTypes.STRING,
     },
-    responses: {
+   // responses: {
         // Store the array of response objects as JSON
-        type: DataTypes.JSON,
-        defaultValue: [],
-    },
+    //    type: DataTypes.JSON,
+     //   defaultValue: [],
+   // },
+
+   responses: {
+    type: DataTypes.TEXT,
+    allowNull: true
+},
     score: {
         type: DataTypes.FLOAT,
         defaultValue: 0,

@@ -34,10 +34,15 @@ const Course = sequelize.define('Course', {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
     },
+   // chapters: {
+     //   type: DataTypes.JSON,
+       // defaultValue: [],
+    //},
+
     chapters: {
-        type: DataTypes.JSON,
-        defaultValue: [],
-    },
+    type: DataTypes.TEXT,
+    allowNull: true,
+},
     createdBy: {
         type: DataTypes.UUID,
         allowNull: true,

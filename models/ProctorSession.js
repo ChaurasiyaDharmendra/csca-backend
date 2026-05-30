@@ -32,13 +32,23 @@ const ProctorSession = sequelize.define('ProctorSession', {
         type: DataTypes.ENUM('pending', 'verified', 'rejected'),
         defaultValue: 'pending'
     },
+   // kycData: {
+     //   type: DataTypes.JSON,
+    // },
+
     kycData: {
-        type: DataTypes.JSON,
-    },
-    messages: {
-        type: DataTypes.JSON,
-        defaultValue: []
-    },
+    type: DataTypes.TEXT,
+    allowNull: true
+},
+   // messages: {
+     //   type: DataTypes.JSON,
+    //    defaultValue: []
+   // },
+
+   messages: {
+    type: DataTypes.TEXT,
+    allowNull: true
+},
     lastUpdated: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

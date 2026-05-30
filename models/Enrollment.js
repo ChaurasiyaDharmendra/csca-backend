@@ -30,10 +30,15 @@ const Enrollment = sequelize.define('Enrollment', {
         type: DataTypes.ENUM('Pending', 'Completed', 'Failed'),
         defaultValue: 'Pending'
     },
-    completedChapters: {
-        type: DataTypes.JSON, // Array of UUIDs
-        defaultValue: []
-    }
+   // completedChapters: {
+     //   type: DataTypes.JSON, // Array of UUIDs
+    //    defaultValue: []
+   // }
+
+   completedChapters: {
+    type: DataTypes.TEXT,
+    allowNull: true
+}
 }, {
     timestamps: true,
     indexes: [

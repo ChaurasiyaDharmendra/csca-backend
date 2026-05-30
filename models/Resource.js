@@ -11,10 +11,15 @@ const Resource = sequelize.define('Resource', {
     },
     tag: { type: DataTypes.STRING },
     outcome: { type: DataTypes.STRING },
-    details: {
-        type: DataTypes.JSON,
-        defaultValue: [],
-    },
+   // details: {
+     //   type: DataTypes.JSON,
+    //    defaultValue: [],
+   // },
+
+   details: {
+    type: DataTypes.TEXT,
+    allowNull: true
+},
     link: { type: DataTypes.STRING },
     isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
     createdBy: { type: DataTypes.UUID, allowNull: true }
