@@ -35,11 +35,16 @@ const Exam = sequelize.define('Exam', {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
     },
-    questions: {
+   // questions: {
         // Store the array of question objects as JSON
-        type: DataTypes.JSON,
-        defaultValue: [],
-    },
+    //    type: DataTypes.JSON,
+    //    defaultValue: [],
+  //  },
+  
+  questions: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+},
     createdBy: {
         type: DataTypes.UUID,
         allowNull: true,
