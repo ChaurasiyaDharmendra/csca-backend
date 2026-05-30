@@ -79,7 +79,12 @@ app.use("/api/certifications", certificationRoutes);
 app.use("/api/careers", careerRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/resources", resourceRoutes);
-app.use("/api/partnerships", partnershipRoutes);
+app.use("/api/partnerships", partnershipRoutes); 
+
+// Test Route
+app.get("/", (req, res) => {
+    res.send("CSCA Platform Backend Running Successfully");
+});
 
 // Socket.io Logic
 io.on("connection", (socket) => {
